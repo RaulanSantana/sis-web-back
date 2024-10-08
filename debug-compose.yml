@@ -1,0 +1,66 @@
+version: "3"
+services:
+  api:
+    image: apibase  # Defina o nome correto da imagem ou construa a partir do Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    build: .
+    depends_on:
+      - db
+      - redis
+    links:
+      - db
+      - redis
+    restart: always
+    command: bash -c "npm run dev"  # Comando para iniciar a aplicação no modo de desenvolvimento
+    tty: true
+    ports:
+      - "8080:8080"  # Porta para acessar a API
+      - "9229:9229"  # Porta para o debugger Node.js, se necessário
+    logging:
+      options:
+        max-size: "512m"
+        max-file: "10"
+    volumes:
+      - ./:/usr/src/app  # Monta o diretório atual na aplicação
+      - api-backend-node-modules:/usr/src/app/node_modules  # Volume para persistir os módulos Node.js
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/postgres  # URL do banco de dados PostgreSQL
+      - REDIS_URL=redis://redis:6379  # URL do Redis
+
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"  
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres 
+    volumes:
+      - db_data:/var/lib/postgresql/data  # Volume para persistir os dados do banco
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"  # Porta padrão do Redis
+    deploy:
+      resources:
+        limits:
+          cpus: "0.21"
+          memory: 256M
+        reservations:
+          cpus: "0.10"
+          memory: 160M
+    restart: always
+    logging:
+      options:
+        max-size: "512m"
+        max-file: "10"
+
+volumes:
+  api-backend-node-modules:
+  db_data:
