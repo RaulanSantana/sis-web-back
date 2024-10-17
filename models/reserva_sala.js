@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db.js');
 
-const Users = db.define('reserva_sala', {
+const Reserva_sala = db.define('reserva_sala', {  
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -55,11 +55,10 @@ const Users = db.define('reserva_sala', {
     defaultValue: Sequelize.NOW,
   }
 }, {
-  // Desativa os timestamps automáticos, pois estamos definindo os campos manualmente
+  
   timestamps: false
 });
 
-// Synchronize the model with the database
-// Users.sync();
 
-module.exports = Users;
+
+module.exports = Reserva_sala;  

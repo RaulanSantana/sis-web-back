@@ -25,13 +25,7 @@ routes.forEach(filename => {
     app.use(require(filename));
 });
 
-app.get('/', (req, res) => res.send('<h1>teste</h1>'));
 
-app.set('view engine', 'ejs'); 
-app.set('views', path.join(__dirname, 'views')); 
 
 module.exports= app;
-// const PORT = 5000;
-// app.listen(PORT, () => {
-//     console.log(`Servidor está rodando na porta ${PORT}`);
-// });
+

@@ -1,38 +1,52 @@
 const express = require('express');
-const {createServer}=require("http");
+const bodyParser = require('body-parser');
+const { createServer } = require('http');
+const cors = require('cors'); 
+const reservasRoute = require('./routes/reservasala'); // Corrigido o caminho
+
+const app = express();
 const port = 8080;
-const Reservas_a = require('./routes/reservas_a'); 
 
-const app = require("./config/router-factory");
+// Configuração de middlewares
+app.use(cors()); // Habilita o CORS para todas as rotas
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
+// Definindo rotas
+app.use('/api/v1/reservas', reservasRoute); // Utiliza o router das reservas
 
-const http = createServer(app);
-
-
-
-
+// Rota de teste
 app.get('/teste', (req, res) => {
-  console.log('opa')
+  console.log('opa');
   res.send('Hello - World!');
 });
 
+// Rota para criar reservas
+app.post('/reservas', async (req, res) => {
+    const {id, disciplina, tipo_reserva, equipamentos, data, turno, hora_inicio, hora_fim, reserva_dia, observacao } = req.body;
 
-app.post('/cadastrar_reserva_a', async (req, res) => {
-  try {
+    // Simulando a criação da reserva
+    const novaReserva = {
+      id,
+      disciplina,
+      tipo_reserva,
+      equipamentos,
+      data,
+      turno,
+      hora_inicio,
+      hora_fim,
+      reserva_dia,
+      observacao,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
 
-    await Reservas_a.create(req.body); 
-    return res.json({
-      erro: false,
-      mensagem: "Dados cadastrados com sucesso"
-    });
-  } catch (error) {
-    return res.status(400).json({
-      erro: true,
-      mensagem: "Erro, não cadastrado",
-      detalhes: error.message 
-    });
-  }
+    console.log('Nova reserva criada:', novaReserva);
+    res.status(201).json(novaReserva);
 });
 
-// Iniciar o servidor
-http.listen(port, () => console.log(`Servidor rodando na porta: ${port}!`));
+// Iniciando o servidor
+const server = createServer(app);
+server.listen(port, () => {
+  console.log(`Servidor rodando na porta: ${port}!`);
+});

@@ -10,7 +10,7 @@ ENV POSTGRES_DB blog
 # Defina a porta padrão para o PostgreSQL
 EXPOSE 5432
 
-FROM node:16
+FROM node:22
 
 WORKDIR /usr/src/app
 
