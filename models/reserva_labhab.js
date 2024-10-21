@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db.js');
 
-const Users = db.define('reserva_labinfo', {
+const Reserva_labhab = db.define('reserva_labinfo', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -62,4 +62,4 @@ const Users = db.define('reserva_labinfo', {
 // Synchronize the model with the database
 // Users.sync();
 
-module.exports = Users;
+module.exports = Reserva_labhab;
