@@ -14,7 +14,6 @@ const fetchData = async (endpoint) => {
 };
 
 const postData = async (endpoint, data) => {
-    console.log('ta aqui')
     try {
         const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
             method: 'POST',

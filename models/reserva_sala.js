@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('./db.js');
+const Usuario = require('./usuario'); // Importa a model U
 
 const Reserva_sala = db.define('reserva_sala', {  
   id: {
@@ -44,6 +45,14 @@ const Reserva_sala = db.define('reserva_sala', {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  id_usuario:{
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Usuario, // Faz referência à model Usuario
+      key: 'id'
+    }
+  },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: false,
@@ -55,10 +64,12 @@ const Reserva_sala = db.define('reserva_sala', {
     defaultValue: Sequelize.NOW,
   }
 }, {
-  
+  freezeTableName: true,
   timestamps: false
 });
 
+// Definir a associação
+Reserva_sala.belongsTo(Usuario, { foreignKey: 'id_usuario', as: 'usuario' });
 
 
 module.exports = Reserva_sala;  

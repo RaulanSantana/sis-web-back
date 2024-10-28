@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('./db.js');
 
-const Reserva_labhab = db.define('reserva_labinfo', {
+const Reserva_labhab = db.define('reserva_labhab', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -12,11 +12,11 @@ const Reserva_labhab = db.define('reserva_labinfo', {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  software: {
+  laboratorio: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  equipamentos: {
+  pop: {
     type: Sequelize.STRING,
     allowNull: true,
   },
@@ -55,7 +55,7 @@ const Reserva_labhab = db.define('reserva_labinfo', {
     defaultValue: Sequelize.NOW,
   }
 }, {
-  // Desativa os timestamps automáticos, pois estamos definindo os campos manualmente
+  freezeTableName: true,
   timestamps: false
 });
 

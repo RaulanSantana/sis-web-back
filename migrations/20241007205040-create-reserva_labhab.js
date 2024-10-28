@@ -31,11 +31,11 @@ module.exports = {
         allowNull: false,
       },
       hora_inicio: {
-        type: Sequelize.INTEGER,  
+        type: Sequelize.TIME,  
         allowNull: false,
       },
       hora_fim: {
-        type: Sequelize.INTEGER,  
+        type: Sequelize.TIME,  
         allowNull: false,
       },
       reserva_dia: {
