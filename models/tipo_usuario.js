@@ -2,6 +2,7 @@ const Sequelize = require('sequelize');
 const db = require('./db.js');
 
 
+
 const Tipo_usuario= db.define('tipo_usuario', {  
   id: {
     type: Sequelize.INTEGER,
@@ -24,11 +25,11 @@ const Tipo_usuario= db.define('tipo_usuario', {
     defaultValue: Sequelize.NOW,
   }
 }, {
-  tableName: 'tipo_usuario',
+  freezeTableName: true,
   timestamps: false
 });
 
-Tipo_usuario.hasMany(Usuario, { foreignKey: 'id_tipo_usuario', as: 'usuarios' });
+// Tipo_usuario.hasMany(Usuario, { foreignKey: 'id_tipo_suario', as: 'usuarios' });
 
 
 module.exports = Tipo_usuario;  

@@ -1,3 +1,8 @@
+
+const Sequelize = require('sequelize');
+const db = require('./db.js');
+const Tipo_usuario = require('./tipo_usuario');
+
 const Usuario = db.define('usuario', {  
   id: {
     type: Sequelize.INTEGER,
@@ -34,11 +39,12 @@ const Usuario = db.define('usuario', {
     defaultValue: Sequelize.NOW,
   }
 }, {
-  tableName: 'usuario',
+  freezeTableName: true,
   timestamps: false
 });
 
 
-Usuario.belongsTo(Tipo_usuario, { foreignKey: 'tipo_usuario', as: 'tipoUsuario' });
+Usuario.belongsTo(Tipo_usuario, { foreignKey: 'id_tipo_usuario', as: 'tipoUsuario' });
 
-module.exports = { Usuario, Tipo_usuario };
+// module.exports = { Usuario, Tipo_usuario };
+module.exports = Usuario;

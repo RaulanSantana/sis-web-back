@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('./db.js');
-const Usuario = require('./usuario'); // Importa a model U
+const Usuario = require('./usuario'); 
 
 const Reserva_sala = db.define('reserva_sala', {  
   id: {
@@ -45,11 +45,11 @@ const Reserva_sala = db.define('reserva_sala', {
     type: Sequelize.STRING,
     allowNull: true,
   },
-  id_usuario:{
+  id_usuario: {
     type: Sequelize.INTEGER,
     allowNull: false,
     references: {
-      model: Usuario, // Faz referência à model Usuario
+      model: Usuario, 
       key: 'id'
     }
   },
@@ -71,5 +71,4 @@ const Reserva_sala = db.define('reserva_sala', {
 // Definir a associação
 Reserva_sala.belongsTo(Usuario, { foreignKey: 'id_usuario', as: 'usuario' });
 
-
-module.exports = Reserva_sala;  
+module.exports = Reserva_sala;

@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require('./db.js');
+const Usuario = require('./usuario'); 
 
 const Reserva_labinfo = db.define('reserva_labinfo', {
   id: {
@@ -44,6 +45,14 @@ const Reserva_labinfo = db.define('reserva_labinfo', {
     type: Sequelize.STRING,
     allowNull: true,
   },
+  id_usuario: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: Usuario, 
+      key: 'id'
+    }
+  },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: false,
@@ -61,5 +70,5 @@ const Reserva_labinfo = db.define('reserva_labinfo', {
 
 // Synchronize the model with the database
 // Users.sync();
-
+Reserva_labinfo.belongsTo(Usuario, { foreignKey: 'id_usuario', as: 'usuario' });
 module.exports = Reserva_labinfo;

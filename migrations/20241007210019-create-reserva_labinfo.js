@@ -46,6 +46,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      id_usuario:{
+        type: Sequelize.INTEGER,
+        references:{
+          key:"id",
+          model:{
+            tableName: "usuario",
+          }
+        }
+      },
+      status: {
+        type: Sequelize.TIME,  
+        allowNull: false,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
