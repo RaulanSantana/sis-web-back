@@ -1,30 +1,30 @@
+// server.js
 const express = require('express');
-const bodyParser = require('body-parser');
-const { createServer } = require('http');
-const reservaSala = require('./routes/reservas-sala');
-const reservaLabHab = require('./routes/reservas-labhab');
-const reservaLabInfo = require('./routes/reservas-labinfo');
-const usuarioLogin = require ('./routes/login');
-const reservaGerais= require('./routes/reservas-gerais');
+const cors = require('cors');
+const path = require('path');
+const routes = require('./config/router-factory'); // Importa a array de rotas
 
-
-const app = express(); 
+const app = express();
 const port = 8080;
 
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use('/public/images', express.static(path.join(__dirname, '..', 'public', 'images')));
 
-// Rotas
-app.use('/reservas-sala', reservaSala);
-app.use('/reservas-labhab',reservaLabHab);
-app.use('/reservas-labinfo',reservaLabInfo);
-app.use('/usuario-login', usuarioLogin);
-app.use('/reservas-gerais',reservaGerais)
-
-
-
-const server = createServer(app);
-server.listen(port, () => {
-  console.log(`Servidor rodando na porta: ${port}!`);
+// Registra todas as rotas usando a array de `router-files.js`
+routes.forEach(routeConfig => {
+    app.use(routeConfig.path, routeConfig.route);
 });
+
+app.listen(port, () => {
+    console.log(`Servidor rodando na porta: ${port}!`);
+});
+
+module.exports = app;

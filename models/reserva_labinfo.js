@@ -13,6 +13,11 @@ const Reserva_labinfo = db.define('reserva_labinfo', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  nome: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    defaultValue: 'laboratorio de informatica',
+  },
   software: {
     type: Sequelize.STRING,
     allowNull: true,
@@ -52,6 +57,11 @@ const Reserva_labinfo = db.define('reserva_labinfo', {
       model: Usuario, 
       key: 'id'
     }
+  },
+  status: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
   },
   createdAt: {
     type: Sequelize.DATE,

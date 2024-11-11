@@ -56,7 +56,7 @@ module.exports = {
         }
       },
       status: {
-        type: Sequelize.TIME,  
+        type: Sequelize.INTEGER,  
         allowNull: false,
       },
       createdAt: {

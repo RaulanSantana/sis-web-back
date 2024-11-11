@@ -41,4 +41,34 @@ router.post('/login', async (req, res) => {
   }
 });
 
+
+
+
+
+router.get('/logado', async (req, res) => {
+  try {
+    const userId = req.query.userId; // Extrai o userId dos parâmetros de consulta
+    console.log('Parâmetro de consulta userId recebido no backend:', userId);
+
+    if (!userId) {
+      return res.status(400).json({ error: 'userId é obrigatório' });
+    }
+
+    const usuario = await Usuario.findByPk(userId); 
+    if (!usuario) {
+      return res.status(404).json({ error: 'Usuário não encontrado!' });
+    }
+
+    console.log('Usuário encontrado:', usuario); // Log do usuário encontrado
+    res.status(200).json(usuario); 
+  } catch (error) {
+    console.error('Erro ao buscar usuário:', error);
+    res.status(500).json({ error: 'Erro ao buscar usuário' });
+  }
+});
+
+
+
+
+
 module.exports = router;

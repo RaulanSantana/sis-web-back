@@ -2,17 +2,16 @@
 FROM postgres:latest
 
 # Defina a variável de ambiente para configurar o Postgres para criar o banco de dados
-ENV POSTGRES_DB blog
 
 # Copie o script SQL para criar o banco de dados
 # COPY init.sql /docker-entrypoint-initdb.d/
 
 # Defina a porta padrão para o PostgreSQL
-EXPOSE 5432
+# EXPOSE 5432
 
-FROM node:22
+# FROM node:22
 
-WORKDIR /usr/src/app
+# WORKDIR /usr/src/app
 
 COPY package*.json ./
 

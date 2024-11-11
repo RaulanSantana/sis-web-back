@@ -53,6 +53,11 @@ const Reserva_labhab = db.define('reserva_labhab', {
       key: 'id'
     }
   },
+  status: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    defaultValue: 1,
+  },
   createdAt: {
     type: Sequelize.DATE,
     allowNull: false,

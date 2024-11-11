@@ -1,31 +1,8 @@
-const express = require('express');
-const path = require('path');
-const routes = require('./router-files'); 
-
-const app = express(); 
-
-app.use((req, res, next) => {
-    res.set('Access-Control-Allow-Headers', '*'); 
-    res.set('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,PATCH'); 
-    next();
-});
-
-app.use(
-    express.urlencoded({
-        extended: false,
-    }),
-);
-
-app.use(express.json());
-app.use(express.static('public'));
-
-app.use('/public/images', express.static(path.join(__dirname, '..', 'public', 'images'))); 
-
-routes.forEach(filename => {
-    app.use(require(filename));
-});
-
-
-
-module.exports= app;
-
+// router-files.js
+module.exports = [
+    { path: '/reservas-sala', route: require('../routes/reservas-sala') },
+    { path: '/reservas-labhab', route: require('../routes/reservas-labhab') },
+    { path: '/reservas-labinfo', route: require('../routes/reservas-labinfo') },
+    { path: '/usuario-login', route: require('../routes/login') },
+    { path: '/reservas-gerais', route: require('../routes/reservas-gerais') }
+];

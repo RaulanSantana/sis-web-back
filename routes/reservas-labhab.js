@@ -40,13 +40,21 @@ router.get('/:id', async (req, res) => {
 });
 
 // Rota para atualizar uma reserva por ID
-router.put('/:id', async (req, res) => {
+router.put('/alterar/:id', async (req, res) => {
   try {
+    const userId = req.headers.userId;  // O userId deve vir dos cabeçalhos
+    const { status } = req.body;  // O status deve vir do corpo da requisição
+
     const reserva = await Reserva_LabHab.findByPk(req.params.id);
     if (!reserva) {
       return res.status(404).json({ error: 'Reserva não encontrada' });
     }
-    await reserva.update(req.body);
+
+    if (reserva.userId !== userId) {
+      return res.status(403).json({ error: 'Você não tem permissão para alterar esta reserva.' });
+    }
+
+    await reserva.update({ status });  // Atualiza o status da reserva
     res.status(200).json(reserva);
   } catch (error) {
     console.error('Erro ao atualizar reserva:', error);
@@ -55,12 +63,21 @@ router.put('/:id', async (req, res) => {
 });
 
 // Rota para excluir uma reserva por ID
-router.delete('/:id', async (req, res) => {
+router.delete('/deletar/:id', async (req, res) => {
   try {
+    const userId = req.query.userId; 
+   
     const reserva = await Reserva_LabHab.findByPk(req.params.id);
+
     if (!reserva) {
       return res.status(404).json({ error: 'Reserva não encontrada' });
     }
+
+    // Verifica se a reserva pertence ao usuário logado
+    if (reserva.userId !== userId) {
+      return res.status(403).json({ error: 'Você não tem permissão para excluir esta reserva.' });
+    }
+
     await reserva.destroy();
     res.status(204).send();
   } catch (error) {

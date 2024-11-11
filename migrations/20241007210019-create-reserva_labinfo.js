@@ -14,6 +14,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      nome: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       software: {
         type: Sequelize.STRING,
         allowNull: true,
@@ -56,7 +60,7 @@ module.exports = {
         }
       },
       status: {
-        type: Sequelize.TIME,  
+        type: Sequelize.INTEGER,  
         allowNull: false,
       },
       createdAt: {
