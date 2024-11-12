@@ -31,3 +31,4 @@ module.exports = {
     await queryInterface.dropTable('tipo_usuario');
   }
 };
+/////

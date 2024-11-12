@@ -76,3 +76,4 @@ module.exports = {
     await queryInterface.dropTable('reserva_sala');
   }
 };
+/////
